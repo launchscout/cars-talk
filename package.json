@@ -1,0 +1,20 @@
+{
+  "name": "embedded-apps-chicagojs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "marp chicagojs.md -o index.html",
+    "start": "npm run watch & live-server .",
+    "watch": "marp --watch chicagojs.md -o index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@marp-team/marp-cli": "^2.3.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
