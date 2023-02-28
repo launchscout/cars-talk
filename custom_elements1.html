@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <script>
+      class ChicagoJSElement extends HTMLElement {
+        connectedCallback() {
+          this.attachShadow({mode: 'open'});
+          this.shadowRoot.innerHTML = `
+            <style> div { color: blue; } </style>
+            <h1 part="header">Hi Chicago JS!</h1>
+            <div>It's great to meet you! </div>
+          `;
+        }
+      }
+      window.customElements.define('chicago-js', ChicagoJSElement);
+    </script>
+  </head>
+  <body>
+    <chicago-js></chicago-js>
+    <div>This isn't blue.</div>
+  </body>
+</html>

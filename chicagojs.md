@@ -38,181 +38,201 @@ style: |
 ---
 
 # Who am I?
-* Slightly fossilized web developer (full stack)
-  * Perl in the 90s
-  * Java in the naughties
-  * Ruby in the 10s
-  * Elixir nowadays
-  * and Javascript (almost) the whole time :)
-* Co-Founder, Launch Scout
+- Long time Web Developer
+- Big fan of:
+  - Elixir
+  - Web components
+- Co-Founder, Launch Scout
+---
+
+# Agenda
+- What's an Embedded Web App?
+- A better approach for building them
+- Shopping cart example
+- And then again on steroids :)
+
 ---
 <!-- footer: ![](full-color.png) -->
 # What's an Embedded Web App?
-* Adds functionality to a larger application
-* Examples
-  * Live support
-  * Buy button
-  * Comments
-  * Surveys
-* You could also lump in Micro Front Ends
+- Adds functionality to a larger application
+- Examples
+  - Contact form
+  - Job app
+  - Survey
+  - Comments
+  - Buy button
+- You could also lump in Micro Front Ends
 
 ---
 
 # Current state of the art
-* Third party javascript
-* Often `iframe` based
-* Proprietary, limited customization
+- Third party javascript
+- Often `iframe` based
+- Proprietary, limited customization
 
 ---
 
 # There's a better way
-* Custom Elements are here
-* Supported by all the browsers
-* Superior customization options
-* The right tool for the job!
+- Custom Elements are here
+- Supported by all the browsers
+- Superior customization options
+- The right tool for the job!
 
 ---
 
 # Great Developer Experience
-* Your website is already made of HTML
-* No framework commitment required!
-* Superior customization
-  * Shadow parts
-  * Slots
+- Your website is already made of HTML
+- No framework commitment required!
+- Superior customization
+  - Shadow parts
+  - Slots
 
 ---
 
-# Example time!
+# Custom elements [crash course](custom_elements1.html) :)
+
+```js
+class ChicagoJSElement extends HTMLElement {
+  connectedCallback() {
+    this.attachShadow({mode: 'open'});
+    this.shadowRoot.innerHTML = `
+      <style> div { color: blue; } </style>
+      <h1 part="header">Hi Chicago JS!</h1>
+      <div>It's great to meet you! </div>
+    `;
+  }
+}
+window.customElements.define('chicago-js', ChicagoJSElement);
+```
+---
+
+# Slots and Parts, oh my!
+- `<slot></slot>` in a shadow DOM, will render inner tag content
+- `<div part="foo"></div>` allows external CSS to style this 
+
+---
+
+# Litelement
+- A very small library for Custom Elements
+- properties bound to attributes that trigger re-renders
+- nice templating syntax
+- If you don't like it there are X hundred others :)
 
 ---
 
 # What about the backend?
-* Typically JS calling API
-* REST vs GraphQL
-* Managing state on both tiers :(
-* Building two apps :(
+- Typically JS calling API
+- REST vs GraphQL
+- Managing state on both tiers :(
+- Building two apps :(
 
 ---
 
-# Here is my crazy dream:
-* State on the server is the source of truth
-* Client code:
-  * renders the current state
-  * dispatches events to the server
-  * receives state updates
+# Here is what I'd like:
+- State on the server is the source of truth
+- Client code:
+  - renders the current state
+  - dispatches events to the server
+  - receives state updates (and other events)
 
 ---
 
 # How do I get there? LiveState!
-* npm package for the client (phx-live-state)
-* Elixir library for the server (live_state)
-  * a tiny process for the state of each conversation
-  * lots of messages over WebSockets
-  * Elixir makes this practical
+- npm package for the client (phx-live-state)
+  - sends (and receives) custom events over WebSockets
+  - receives state updates
+  - (optionally) manages state on custom element props
+- Elixir library for the server (live_state)
+  - handle events over WebSockets
+  - computes new state
+  - sends state updates to clients
+
+---
+
+# What the heck is Elixir?
+- A functional language on the Erlang VM
+- Ruby inspired developer friendliness
+- Really good at extremely high concurrency, high availability apps
+- Excellent web app framework in Phoenix
+- Channels for WebSockets
 
 ---
 
 # Introducing `phx-live-state`
-* javascript (typescript) npm
-* increasing levels of abstraction:
-  * `LiveState` - lower level API
-  * `connectElement()` allows you to "wire up" a Custom Element
-  * `@liveState` TS decorator lets you declaratively annotate a Custom Element class
+- javascript (typescript) npm
+- increasing levels of abstraction:
+  - `LiveState` - lower level API
+  - `connectElement()` allows you to "wire up" a Custom Element
+  - `@liveState` TS decorator lets you declaratively annotate a Custom Element class
 
 ---
 
-## `@liveState` typescript decorator
-* decorates a Custom Element class
-* takes a single `object` param
-  * url: (optional, defaults to `url` prop of element)
-  * channelName: (optional, defaults to `channelName` prop on element)
-  * properties - list of properties to set from state
-  * attributes - list of attributes to set from state
-  * events
-    * send - Custom Events to send from this element
-    * receive - Custom Events to receive and then dispatch on this element
-
----
-
-## Server side LiveState: The Event/State reducer pattern
-* Functional pattern for managing state
-* Redux
-* Elm
-* (etc)
-
----
-
-# Key elements
-* Events
-  * Name, payload
-* State
-* Reducers: functions which take
-  * event
-  * current state
-  * return a new state
-
----
-
-# Does this seem familiar?
-* Redux
-* Elm
-* `GenServer`
-* LiveView
+## `@liveState` config 
+- url
+- topic
+- optional params
+- properties to manage
+- events to send/receive
+- provide/consume context (for sharing)
 
 ---
 
 # Our example project: `<stripe-cart>`
 ## The scenario:
-* You have website that is just plain old html files
-* You want to add a truly interactive shopping cart experience
-* What would we need?
+- You have website that is just plain old html files
+- You want to add a truly interactive shopping cart experience
+- What would we need?
 
 ---
 
 # Two custom elements
-* `<stripe-cart>`
-  * Displays cart.
-  * Pops a modal for details
-  * Checkout button redirects to stripe to complete the checkout session
-* `<stripe-cart-additem>`
-  * Adds an item to the cart. Takes a price id as an attribute.
+- `<stripe-cart>`
+  - Displays cart.
+  - Pops a modal for details
+  - Checkout button redirects to stripe to complete the checkout session
+- `<stripe-cart-additem>`
+  - Adds an item to the cart. Takes a price id as an attribute.
 
 ---
 
-Let's see it!
+# On the server
+- Stripe API key from config
+- Handle events:
+  - add_cart_item - updates state with new item added
+  - checkout - creates checkout session w/Stripe and sends redirect event to client
 
 ---
 
-Launch Elements: `<stripe-cart>` all growed up
+# Let's see it!
 
 ---
 
-# Future possible things
-* Very soon:
-  * ~~jsonpatch for efficient state management~~
-  * authorization hook and example
-* Other clients
-  * Swift/iOS
-  * Kotlin/Android
-  * React
-* Connecting to FAAS
+# Launch Elements: `<stripe-cart>` all growed up
+## What would it take to "productionalize" this?
+- hosting
+- persisting cart
+- connect your own Stripe account
+- modify your cart items
+- checkout message
+- email receipt (thanks Stripe!)
 
 ---
 
-# It's early times!
-* APIs may still change
-* It's great time to join us if you want to help them be better :)
-* If you are building an embedded or micro front end app, let's talk
-  * chris@launchscout.com
+# [elements.launchscout.com](https://elements.launchscout.com)
+
+---
+
+# How you can help!
+- If you are building an Embedded app, let's talk!
+- Help us test Launch Elements (elements.launchscout.com)
+- Tell me where I should eat dinner :)
 
 ---
 
 # Links:
-* live_state elixir library: https://github.com/launchscout/live_state
-* phx-live-state client npm: https://github.com/launchscout/live-state
-* discord-element front end: https://github.com/launchscout/discord-element
-* discord-element back end: https://github.com/launchscout/discord_element
-* [Live comments demo](https://launchscout.github.io/test-livestate-comments/)
+- This talk: https://github.com/launchscout/chicago-js-03-2023
+- live_state elixir library: https://github.com/launchscout/live_state
+- phx-live-state client npm: https://github.com/launchscout/live-state
 
 ---
  
