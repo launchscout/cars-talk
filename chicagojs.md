@@ -106,14 +106,14 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 ```
 ---
 
-# Slots and Parts, oh my!
+# Slots and Parts, [oh my!](custom_elements2.html)
 - `<slot></slot>` in a shadow DOM, will render inner tag content
 - `<div part="foo"></div>` allows external CSS to style this 
 
 ---
 
-# Litelement
-- A very small library for Custom Elements
+# [Litelement](lit.dev)
+- A very small library to make Custom Elements even easier
 - properties bound to attributes that trigger re-renders
 - nice templating syntax
 - If you don't like it there are X hundred others :)
@@ -180,7 +180,9 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 # Our example project: `<stripe-cart>`
 ## The scenario:
 - You have website that is just plain old html files
+- You have a stripe account with products to sell
 - You want to add a truly interactive shopping cart experience
+  - As in better than a one item "Buy Now" button
 - What would we need?
 
 ---
@@ -222,6 +224,10 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 
 ---
 
+# Elements demo store!
+
+---
+
 # How you can help!
 - If you are building an Embedded app, let's talk!
 - Help us test Launch Elements (elements.launchscout.com)
@@ -233,6 +239,9 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 - This talk: https://github.com/launchscout/chicago-js-03-2023
 - live_state elixir library: https://github.com/launchscout/live_state
 - phx-live-state client npm: https://github.com/launchscout/live-state
+- stripe-cart front end: https://github.com/launchscout/stripe-cart
+- stripe-cart back end: https://github.com/launchscout/stripe_cart
+- Launch Elements: https://github.com/launchscout/launch_cart
 
 ---
  
