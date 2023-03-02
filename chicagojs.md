@@ -179,7 +179,7 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 
 # Our example project: `<stripe-cart>`
 ## The scenario:
-- You have website that is just plain old html files
+- You have website that uses an SSG (or just plain old html files)
 - You have a stripe account with products to sell
 - You want to add a truly interactive shopping cart experience
   - As in better than a one item "Buy Now" button
@@ -205,7 +205,7 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 
 ---
 
-# Let's see it!
+# [Let's see it!](http://localhost:5173)
 
 ---
 
