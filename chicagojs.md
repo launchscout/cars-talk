@@ -46,10 +46,7 @@ style: |
 ---
 
 # Agenda
-- What's an Embedded Web App?
-- A better approach for building them
-- Shopping cart example
-- And then again on steroids :)
+- 
 
 ---
 <!-- footer: ![](full-color.png) -->
@@ -92,17 +89,17 @@ style: |
 # Custom elements [crash course](custom_elements1.html) :)
 
 ```js
-class ChicagoJSElement extends HTMLElement {
+class CinciJSElement extends HTMLElement {
   connectedCallback() {
     this.attachShadow({mode: 'open'});
     this.shadowRoot.innerHTML = `
       <style> div { color: blue; } </style>
-      <h1 part="header">Hi Chicago JS!</h1>
+      <h1 part="header">Hi Cinci JS!</h1>
       <div>It's great to meet you! </div>
     `;
   }
 }
-window.customElements.define('chicago-js', ChicagoJSElement);
+window.customElements.define('cinci-js', CinciJSElement);
 ```
 ---
 
@@ -236,7 +233,7 @@ window.customElements.define('chicago-js', ChicagoJSElement);
 ---
 
 # Links:
-- This talk: https://github.com/launchscout/chicago-js-03-2023
+- This talk: https://github.com/launchscout/cinci-js-03-2023
 - live_state elixir library: https://github.com/launchscout/live_state
 - phx-live-state client npm: https://github.com/launchscout/live-state
 - stripe-cart front end: https://github.com/launchscout/stripe-cart
