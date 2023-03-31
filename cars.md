@@ -30,7 +30,9 @@ style: |
   }
 ---
 
-# Beyond LiveView
+# LiveView and Custom Elements
+### Getting the Javascript you need while keeping the LiveView you love
+
 ### Chris Nelson
 ### Co-Founder, Launch Scout
 ![h:200](full-color.png#title-slide-logo)
@@ -43,19 +45,21 @@ style: |
   - Elixir
   - Web components
 - Co-Founder, Launch Scout
----
-
-# Beyond LiveView
-### Getting the Javascript you need while keeping the LiveView you love
 
 ---
 
 # Goals of this talk
-- What are custom elements (aka Web Components)
-- Why are they the best option for LiveView integration
+- What are custom elements (aka Web Components)?
+- Why are they the best option for LiveView integration?
 - How to do it
 - When to do it
 - Fun demo codez :)
+
+---
+
+# Hot take:
+## It's not the Javascript that makes SPAs suck
+### It's building two apps!
 
 ---
 
@@ -63,12 +67,12 @@ style: |
 - Supported in all the browsers
 - They are really are just HTML
 - Stylable via CSS (to the precise extent you decide)
-- No framework committment required!
+- No framework commitment required!
 - There may already be one to do what you want
 
 ---
 
-# Why are they a good fit with LiveView
+# Why they are a good fit with LiveView
 - LiveView is good at rendering HTML
 - They are HTML
 - Easy integration path
@@ -85,6 +89,7 @@ class HelloCars extends HTMLElement {
     this.innerHTML = "Hello, Cars!";
   }
 }
+window.customElements.define('hello-cars', HelloCars);
 ```
 
 ---
@@ -135,27 +140,24 @@ window.customElements.define('cars-shadow', CarsShadow);
 - Send information out using events
 - Custom events are your friend!
 - Libraries like [Lit](https://lit.dev) can help
+  - but you can choose whatever you like!
 
 ---
 
-# Common scenarios
-- Using existing elements
-- Rolling our own
-- Wrapping a library
+# Integrating Custom Elements with LiveView
+- Include the JS
+  - esbuild makes this pretty easy
+- Add the element to the page
+- Profit?
 
----
+--- 
 
-## LiveView and Custom Elements: The ~~Bad Parts~~ Challenges
-- Writing custom hooks is tedious
-- Passing complex data
+# Challenges we might encouner
+- Passing in complex data
+  - Serialize as JSON
 - LiveView doesn't know about Custom Events
-
----
-
-# We shall overcome..
-- We can serialize JSON
-- `phoenix-custom-event-hook` has your back
-- Don't write your own hook :)
+  - `phoenix-custom-event-hook` has your back
+- If all else fails, we write a hook
 
 ---
 
@@ -175,6 +177,35 @@ look like `<custom-elements>`?
 
 ---
 
+# Common scenarios
+- Rolling our own
+- Using existing elements
+- Wrapping a library
+
+---
+
 # Let's finally see some demos already!!
+
+---
+
+# Rolling our own: `<todo-list>`
+
+---
+
+# Out of the box [data table](https://web-components.carbondesignsystem.com/?path=/story/components-data-table--sortable-with-pagination)
+
+---
+
+# In which [chart.js](https://www.chartjs.org/) becomes a custom element...
+
+---
+
+# Bonus round: testing with wallaby
+
+---
+
+# Resources
+- [LiveElements](https://github.com/launchscout/live_elements)
+- [LiveElements Testbed project (contains all the demos)](https://github.com/launchscout/live_elements_testbed)
 
 ---
